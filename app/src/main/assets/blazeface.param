@@ -1,0 +1,124 @@
+7767517
+122 141
+Input                    image                    0 1 image
+Convolution              Conv_0                   1 1 image relu_0.tmp_0 0=24 1=3 3=2 4=1 5=1 6=648 9=1
+Split                    splitncnn_0              1 2 relu_0.tmp_0 relu_0.tmp_0_splitncnn_0 relu_0.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_1                   1 1 relu_0.tmp_0_splitncnn_1 relu_1.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_2                   1 1 relu_1.tmp_0 batch_norm_2.tmp_3 0=24 1=1 5=1 6=576
+BinaryOp                 Add_0                    2 1 relu_0.tmp_0_splitncnn_0 batch_norm_2.tmp_3 elementwise_add_0
+ReLU                     Relu_2                   1 1 elementwise_add_0 relu_2.tmp_0
+Split                    splitncnn_1              1 2 relu_2.tmp_0 relu_2.tmp_0_splitncnn_0 relu_2.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_3                   1 1 relu_2.tmp_0_splitncnn_1 relu_3.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_4                   1 1 relu_3.tmp_0 batch_norm_4.tmp_3 0=24 1=1 5=1 6=576
+BinaryOp                 Add_1                    2 1 relu_2.tmp_0_splitncnn_0 batch_norm_4.tmp_3 elementwise_add_1
+ReLU                     Relu_4                   1 1 elementwise_add_1 relu_4.tmp_0
+Split                    splitncnn_2              1 2 relu_4.tmp_0 relu_4.tmp_0_splitncnn_0 relu_4.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_5                   1 1 relu_4.tmp_0_splitncnn_1 relu_5.tmp_0 0=24 1=5 3=2 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_6                   1 1 relu_5.tmp_0 batch_norm_6.tmp_3 0=48 1=1 5=1 6=1152
+Pooling                  MaxPool_0                1 1 relu_4.tmp_0_splitncnn_0 pool2d_0.tmp_0 1=2 2=2
+Convolution              Conv_7                   1 1 pool2d_0.tmp_0 relu_6.tmp_0 0=48 1=1 5=1 6=1152 9=1
+BinaryOp                 Add_2                    2 1 relu_6.tmp_0 batch_norm_6.tmp_3 elementwise_add_2
+ReLU                     Relu_7                   1 1 elementwise_add_2 relu_7.tmp_0
+Split                    splitncnn_3              1 2 relu_7.tmp_0 relu_7.tmp_0_splitncnn_0 relu_7.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_8                   1 1 relu_7.tmp_0_splitncnn_1 relu_8.tmp_0 0=48 1=5 4=2 5=1 6=1200 7=48 9=1
+Convolution              Conv_9                   1 1 relu_8.tmp_0 batch_norm_9.tmp_3 0=48 1=1 5=1 6=2304
+BinaryOp                 Add_3                    2 1 relu_7.tmp_0_splitncnn_0 batch_norm_9.tmp_3 elementwise_add_3
+ReLU                     Relu_9                   1 1 elementwise_add_3 relu_9.tmp_0
+Split                    splitncnn_4              1 2 relu_9.tmp_0 relu_9.tmp_0_splitncnn_0 relu_9.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_10                  1 1 relu_9.tmp_0_splitncnn_1 relu_10.tmp_0 0=48 1=5 4=2 5=1 6=1200 7=48 9=1
+Convolution              Conv_11                  1 1 relu_10.tmp_0 batch_norm_11.tmp_3 0=48 1=1 5=1 6=2304
+BinaryOp                 Add_4                    2 1 relu_9.tmp_0_splitncnn_0 batch_norm_11.tmp_3 elementwise_add_4
+ReLU                     Relu_11                  1 1 elementwise_add_4 relu_11.tmp_0
+Split                    splitncnn_5              1 2 relu_11.tmp_0 relu_11.tmp_0_splitncnn_0 relu_11.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_12                  1 1 relu_11.tmp_0_splitncnn_1 relu_12.tmp_0 0=48 1=5 3=2 4=2 5=1 6=1200 7=48 9=1
+Convolution              Conv_13                  1 1 relu_12.tmp_0 tmp_0 0=24 1=1 5=1 6=1152
+HardSwish                HardSwish_0              1 1 tmp_0 tmp_1 0=1.666667e-01
+ConvolutionDepthWise     Conv_14                  1 1 tmp_1 relu_13.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_15                  1 1 relu_13.tmp_0 relu_14.tmp_0 0=96 1=1 5=1 6=2304 9=1
+Pooling                  MaxPool_1                1 1 relu_11.tmp_0_splitncnn_0 pool2d_1.tmp_0 1=2 2=2
+Convolution              Conv_16                  1 1 pool2d_1.tmp_0 relu_15.tmp_0 0=96 1=1 5=1 6=4608 9=1
+BinaryOp                 Add_7                    2 1 relu_15.tmp_0 relu_14.tmp_0 elementwise_add_5
+ReLU                     Relu_16                  1 1 elementwise_add_5 relu_16.tmp_0
+Split                    splitncnn_7              1 2 relu_16.tmp_0 relu_16.tmp_0_splitncnn_0 relu_16.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_17                  1 1 relu_16.tmp_0_splitncnn_1 relu_17.tmp_0 0=96 1=5 4=2 5=1 6=2400 7=96 9=1
+Convolution              Conv_18                  1 1 relu_17.tmp_0 tmp_3 0=24 1=1 5=1 6=2304
+HardSwish                HardSwish_1              1 1 tmp_3 tmp_4 0=1.666667e-01
+ConvolutionDepthWise     Conv_19                  1 1 tmp_4 relu_18.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_20                  1 1 relu_18.tmp_0 relu_19.tmp_0 0=96 1=1 5=1 6=2304 9=1
+BinaryOp                 Add_10                   2 1 relu_16.tmp_0_splitncnn_0 relu_19.tmp_0 elementwise_add_6
+ReLU                     Relu_20                  1 1 elementwise_add_6 relu_20.tmp_0
+Split                    splitncnn_9              1 2 relu_20.tmp_0 relu_20.tmp_0_splitncnn_0 relu_20.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_21                  1 1 relu_20.tmp_0_splitncnn_1 relu_21.tmp_0 0=96 1=5 4=2 5=1 6=2400 7=96 9=1
+Convolution              Conv_22                  1 1 relu_21.tmp_0 tmp_6 0=24 1=1 5=1 6=2304
+HardSwish                HardSwish_2              1 1 tmp_6 tmp_7 0=1.666667e-01
+ConvolutionDepthWise     Conv_23                  1 1 tmp_7 relu_22.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_24                  1 1 relu_22.tmp_0 relu_23.tmp_0 0=96 1=1 5=1 6=2304 9=1
+BinaryOp                 Add_13                   2 1 relu_20.tmp_0_splitncnn_0 relu_23.tmp_0 elementwise_add_7
+ReLU                     Relu_24                  1 1 elementwise_add_7 relu_24.tmp_0
+Split                    splitncnn_11             1 3 relu_24.tmp_0 relu_24.tmp_0_splitncnn_0 relu_24.tmp_0_splitncnn_1 relu_24.tmp_0_splitncnn_2
+ConvolutionDepthWise     Conv_25                  1 1 relu_24.tmp_0_splitncnn_2 relu_25.tmp_0 0=96 1=5 3=2 4=2 5=1 6=2400 7=96 9=1
+Convolution              Conv_26                  1 1 relu_25.tmp_0 tmp_9 0=24 1=1 5=1 6=2304
+HardSwish                HardSwish_3              1 1 tmp_9 tmp_10 0=1.666667e-01
+ConvolutionDepthWise     Conv_27                  1 1 tmp_10 relu_26.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_28                  1 1 relu_26.tmp_0 relu_27.tmp_0 0=96 1=1 5=1 6=2304 9=1
+Pooling                  MaxPool_2                1 1 relu_24.tmp_0_splitncnn_1 pool2d_2.tmp_0 1=2 2=2
+Convolution              Conv_29                  1 1 pool2d_2.tmp_0 relu_28.tmp_0 0=96 1=1 5=1 6=9216 9=1
+BinaryOp                 Add_16                   2 1 relu_28.tmp_0 relu_27.tmp_0 elementwise_add_8
+ReLU                     Relu_29                  1 1 elementwise_add_8 relu_29.tmp_0
+Split                    splitncnn_13             1 2 relu_29.tmp_0 relu_29.tmp_0_splitncnn_0 relu_29.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_30                  1 1 relu_29.tmp_0_splitncnn_1 relu_30.tmp_0 0=96 1=5 4=2 5=1 6=2400 7=96 9=1
+Convolution              Conv_31                  1 1 relu_30.tmp_0 tmp_12 0=24 1=1 5=1 6=2304
+HardSwish                HardSwish_4              1 1 tmp_12 tmp_13 0=1.666667e-01
+ConvolutionDepthWise     Conv_32                  1 1 tmp_13 relu_31.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_33                  1 1 relu_31.tmp_0 relu_32.tmp_0 0=96 1=1 5=1 6=2304 9=1
+BinaryOp                 Add_19                   2 1 relu_29.tmp_0_splitncnn_0 relu_32.tmp_0 elementwise_add_9
+ReLU                     Relu_33                  1 1 elementwise_add_9 relu_33.tmp_0
+Split                    splitncnn_15             1 2 relu_33.tmp_0 relu_33.tmp_0_splitncnn_0 relu_33.tmp_0_splitncnn_1
+ConvolutionDepthWise     Conv_34                  1 1 relu_33.tmp_0_splitncnn_1 relu_34.tmp_0 0=96 1=5 4=2 5=1 6=2400 7=96 9=1
+Convolution              Conv_35                  1 1 relu_34.tmp_0 tmp_15 0=24 1=1 5=1 6=2304
+HardSwish                HardSwish_5              1 1 tmp_15 tmp_16 0=1.666667e-01
+ConvolutionDepthWise     Conv_36                  1 1 tmp_16 relu_35.tmp_0 0=24 1=5 4=2 5=1 6=600 7=24 9=1
+Convolution              Conv_37                  1 1 relu_35.tmp_0 relu_36.tmp_0 0=96 1=1 5=1 6=2304 9=1
+BinaryOp                 Add_22                   2 1 relu_33.tmp_0_splitncnn_0 relu_36.tmp_0 elementwise_add_10
+ReLU                     Relu_37                  1 1 elementwise_add_10 relu_37.tmp_0
+Convolution              Conv_38                  1 1 relu_24.tmp_0_splitncnn_0 leaky_relu_0.tmp_0 0=48 1=1 5=1 6=4608 9=2 -23310=1,1.000000e-02
+Convolution              Conv_39                  1 1 relu_37.tmp_0 leaky_relu_1.tmp_0 0=48 1=1 5=1 6=4608 9=2 -23310=1,1.000000e-02
+Split                    splitncnn_17             1 2 leaky_relu_1.tmp_0 leaky_relu_1.tmp_0_splitncnn_0 leaky_relu_1.tmp_0_splitncnn_1
+Interp                   Resize_0                 1 1 leaky_relu_1.tmp_0_splitncnn_1 nearest_interp_v2_0.tmp_0 0=1 1=2.000000e+00 2=2.000000e+00
+BinaryOp                 Add_23                   2 1 leaky_relu_0.tmp_0 nearest_interp_v2_0.tmp_0 elementwise_add_11
+Convolution              Conv_40                  1 1 elementwise_add_11 leaky_relu_2.tmp_0 0=48 1=3 4=1 5=1 6=20736 9=2 -23310=1,1.000000e-02
+Convolution              Conv_41                  1 1 leaky_relu_2.tmp_0 batch_norm_41.tmp_3 0=24 1=3 4=1 5=1 6=10368
+Split                    splitncnn_18             1 2 batch_norm_41.tmp_3 batch_norm_41.tmp_3_splitncnn_0 batch_norm_41.tmp_3_splitncnn_1
+Convolution              Conv_42                  1 1 batch_norm_41.tmp_3_splitncnn_1 leaky_relu_3.tmp_0 0=12 1=3 4=1 5=1 6=2592 9=2 -23310=1,1.000000e-02
+Convolution              Conv_43                  1 1 leaky_relu_3.tmp_0 batch_norm_43.tmp_3 0=12 1=3 4=1 5=1 6=1296
+Split                    splitncnn_19             1 2 batch_norm_43.tmp_3 batch_norm_43.tmp_3_splitncnn_0 batch_norm_43.tmp_3_splitncnn_1
+Convolution              Conv_44                  1 1 batch_norm_43.tmp_3_splitncnn_1 leaky_relu_4.tmp_0 0=12 1=3 4=1 5=1 6=1296 9=2 -23310=1,1.000000e-02
+Convolution              Conv_45                  1 1 leaky_relu_4.tmp_0 batch_norm_45.tmp_3 0=12 1=3 4=1 5=1 6=1296
+Concat                   Concat_1                 3 1 batch_norm_41.tmp_3_splitncnn_0 batch_norm_43.tmp_3_splitncnn_0 batch_norm_45.tmp_3 concat_0.tmp_0
+ReLU                     Relu_38                  1 1 concat_0.tmp_0 relu_38.tmp_0
+Split                    splitncnn_20             1 2 relu_38.tmp_0 relu_38.tmp_0_splitncnn_0 relu_38.tmp_0_splitncnn_1
+Convolution              Conv_46                  1 1 leaky_relu_1.tmp_0_splitncnn_0 batch_norm_46.tmp_3 0=24 1=3 4=1 5=1 6=10368
+Split                    splitncnn_21             1 2 batch_norm_46.tmp_3 batch_norm_46.tmp_3_splitncnn_0 batch_norm_46.tmp_3_splitncnn_1
+Convolution              Conv_47                  1 1 batch_norm_46.tmp_3_splitncnn_1 leaky_relu_5.tmp_0 0=12 1=3 4=1 5=1 6=2592 9=2 -23310=1,1.000000e-02
+Convolution              Conv_48                  1 1 leaky_relu_5.tmp_0 batch_norm_48.tmp_3 0=12 1=3 4=1 5=1 6=1296
+Split                    splitncnn_22             1 2 batch_norm_48.tmp_3 batch_norm_48.tmp_3_splitncnn_0 batch_norm_48.tmp_3_splitncnn_1
+Convolution              Conv_49                  1 1 batch_norm_48.tmp_3_splitncnn_1 leaky_relu_6.tmp_0 0=12 1=3 4=1 5=1 6=1296 9=2 -23310=1,1.000000e-02
+Convolution              Conv_50                  1 1 leaky_relu_6.tmp_0 batch_norm_50.tmp_3 0=12 1=3 4=1 5=1 6=1296
+Concat                   Concat_2                 3 1 batch_norm_46.tmp_3_splitncnn_0 batch_norm_48.tmp_3_splitncnn_0 batch_norm_50.tmp_3 concat_1.tmp_0
+ReLU                     Relu_39                  1 1 concat_1.tmp_0 relu_39.tmp_0
+Split                    splitncnn_23             1 2 relu_39.tmp_0 relu_39.tmp_0_splitncnn_0 relu_39.tmp_0_splitncnn_1
+Convolution              Conv_51                  1 1 relu_38.tmp_0_splitncnn_1 conv2d_89.tmp_0 0=8 1=3 4=1 5=1 6=3456
+Permute                  Transpose_0              1 1 conv2d_89.tmp_0 transpose_0.tmp_0 0=3
+Reshape                  Reshape_1                1 1 transpose_0.tmp_0 reshape2_0.tmp_0 0=4 1=-1
+Convolution              Conv_52                  1 1 relu_38.tmp_0_splitncnn_0 conv2d_90.tmp_0 0=4 1=3 4=1 5=1 6=1728
+Permute                  Transpose_1              1 1 conv2d_90.tmp_0 transpose_1.tmp_0 0=3
+Reshape                  Reshape_3                1 1 transpose_1.tmp_0 reshape2_1.tmp_0 0=2 1=-1
+Convolution              Conv_53                  1 1 relu_39.tmp_0_splitncnn_1 conv2d_91.tmp_0 0=24 1=3 4=1 5=1 6=10368
+Permute                  Transpose_2              1 1 conv2d_91.tmp_0 transpose_2.tmp_0 0=3
+Reshape                  Reshape_5                1 1 transpose_2.tmp_0 reshape2_2.tmp_0 0=4 1=-1
+Convolution              Conv_54                  1 1 relu_39.tmp_0_splitncnn_0 conv2d_92.tmp_0 0=12 1=3 4=1 5=1 6=5184
+Permute                  Transpose_3              1 1 conv2d_92.tmp_0 transpose_3.tmp_0 0=3
+Reshape                  Reshape_7                1 1 transpose_3.tmp_0 reshape2_3.tmp_0 0=2 1=-1
+Concat                   boxes                    2 1 reshape2_0.tmp_0 reshape2_2.tmp_0 boxes
+Concat                   951                      2 1 reshape2_1.tmp_0 reshape2_3.tmp_0 951
+Softmax                  scores                   1 1 951 scores 0=1 1=1
