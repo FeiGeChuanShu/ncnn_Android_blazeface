@@ -1,7 +1,7 @@
 # ncnn_Android_blazeface
 
 The BlazeFace face detection demo infer by ncnn.  
-The model from PaddleDetection BlazeFace-FPN-SSH.  
+The model from PaddleDetection [BlazeFace-FPN-SSH](https://github.com/PaddlePaddle/PaddleDetection/blob/release/2.3/configs/face_detection/README.md).  
 
 This is a sample ncnn android project, it depends on ncnn library and opencv
 
