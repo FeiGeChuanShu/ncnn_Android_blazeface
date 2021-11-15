@@ -181,12 +181,15 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_blazefacencnn_BlazeFaceNcnn_loadMode
 
     __android_log_print(ANDROID_LOG_DEBUG, "ncnn", "loadModel %p", mgr);
 
-    const char* modeltypes[] =
+    const int target_sizes[] =
     {
-        "blazeface",
+        128,
+        320,
+        416,
+        640
     };
 
-    const char* modeltype = modeltypes[(int)modelid];
+    int target_size = target_sizes[(int)modelid];
     bool use_gpu = (int)cpugpu == 1;
 
     // reload
@@ -203,7 +206,7 @@ JNIEXPORT jboolean JNICALL Java_com_tencent_blazefacencnn_BlazeFaceNcnn_loadMode
         {
             if (!g_blazeface)
                 g_blazeface = new BlazeFace;
-            g_blazeface->load(mgr, modeltype, use_gpu);
+            g_blazeface->load(mgr, target_size, use_gpu);
         }
     }
 

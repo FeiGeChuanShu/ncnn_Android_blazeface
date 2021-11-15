@@ -105,13 +105,14 @@ static void nms_sorted_bboxes(const std::vector<FaceObject>& faceobjects, std::v
     }
 }
 
-int BlazeFace::generate_anchors(int feat_size,int target_size,int step_size,std::vector<float> min_sizes,std::vector<float> aspect_ratios,float offset,std::vector<float> variances)
+int BlazeFace::generate_anchors(int target_size,int step_size,std::vector<float> min_sizes,std::vector<float> aspect_ratios,float offset,std::vector<float> variances)
 {
 	int image_w = target_size;
 	int image_h = target_size;
 
 	float step_w = step_size;
 	float step_h = step_size;
+    int feat_size = target_size / step_size;
 
 	int num_min_size = min_sizes.size();
 	int num_aspect_ratio = aspect_ratios.size();
@@ -191,7 +192,7 @@ void BlazeFace::generate_proposals(const ncnn::Mat& score_blob, const ncnn::Mat&
 }
 
 
-int BlazeFace::load(AAssetManager* mgr, const char* modeltype, bool use_gpu)
+int BlazeFace::load(AAssetManager* mgr, int _target_size, bool use_gpu)
 {
     blazeface.clear();
 
@@ -206,17 +207,15 @@ int BlazeFace::load(AAssetManager* mgr, const char* modeltype, bool use_gpu)
 
     blazeface.opt.num_threads = ncnn::get_big_cpu_count();
 
-    char parampath[256];
-    char modelpath[256];
-    sprintf(parampath, "%s.param", modeltype);
-    sprintf(modelpath, "%s.bin", modeltype);
+    blazeface.load_param(mgr, "blazeface.param");
+    blazeface.load_model(mgr, "blazeface.bin");
 
-    blazeface.load_param(mgr, parampath);
-    blazeface.load_model(mgr, modelpath);
+    target_size = _target_size;
+
     anchors.clear();
-	for (int i = 0; i < feature_maps.size(); i++)
+	for (int i = 0; i < steps.size(); i++)
 	{
-		generate_anchors(feature_maps[i], target_size, steps[i], min_sizes[i],  aspect_ratios[i], offset, variances);
+		generate_anchors(target_size, steps[i], min_sizes[i],  aspect_ratios[i], offset, variances);
 	}
 
     return 0;
@@ -252,8 +251,6 @@ int BlazeFace::detect(const cv::Mat& rgb, std::vector<FaceObject>& faceobjects, 
     ncnn::Mat in_pad;
     ncnn::copy_make_border(in, in_pad, hpad / 2, hpad - hpad / 2, wpad / 2, wpad - wpad / 2, ncnn::BORDER_CONSTANT, 0.f);
 
-    const float mean_vals[3] = {123.675f, 116.28f, 103.53f};
-    const float norm_vals[3] = {0.017125f, 0.017507f, 0.017429f};
     in_pad.substract_mean_normalize(mean_vals, norm_vals);
 
     ncnn::Extractor ex = blazeface.create_extractor();
