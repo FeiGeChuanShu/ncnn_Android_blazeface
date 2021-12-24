@@ -39,4 +39,5 @@ https://github.com/nihui/opencv-mobile
 
 ## reference  
 1.https://github.com/PaddlePaddle/PaddleDetection/blob/release/2.3/configs/face_detection/README.md  
-2.https://github.com/nihui/ncnn-android-scrfd
+2.https://github.com/nihui/ncnn-android-scrfd  
+3.https://github.com/deepcam-cn/yolov5-face
