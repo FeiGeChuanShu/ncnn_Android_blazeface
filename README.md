@@ -10,7 +10,7 @@ https://github.com/nihui/opencv-mobile
 ## model support  
 1.[BlazeFace-FPN-SSH](https://github.com/PaddlePaddle/PaddleDetection/blob/release/2.3/configs/face_detection/README.md)(The model from PaddleDetection)  
 2.[BlazeFace-FPN-SSH](https://github.com/deepcam-cn/yolov5-face)(The model from yolov5-face)  
-
+3.[Face-Mesh](https://google.github.io/mediapipe/solutions/face_mesh)(The model from mediapipe)  
 ## how to build and run
 ### step1
 https://github.com/Tencent/ncnn/releases
@@ -40,4 +40,5 @@ https://github.com/nihui/opencv-mobile
 ## reference  
 1.https://github.com/PaddlePaddle/PaddleDetection/blob/release/2.3/configs/face_detection/README.md  
 2.https://github.com/nihui/ncnn-android-scrfd  
-3.https://github.com/deepcam-cn/yolov5-face
+3.https://github.com/deepcam-cn/yolov5-face  
+4.https://github.com/google/mediapipe
