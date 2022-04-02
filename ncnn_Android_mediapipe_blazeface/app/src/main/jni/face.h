@@ -32,6 +32,8 @@ struct Object
     cv::Point2f  pos[4];
     cv::Mat trans_image;
     std::vector<cv::Point2f> skeleton;
+    std::vector<cv::Point2f> left_eyes;
+    std::vector<cv::Point2f> right_eyes;
 };
 
 class Face

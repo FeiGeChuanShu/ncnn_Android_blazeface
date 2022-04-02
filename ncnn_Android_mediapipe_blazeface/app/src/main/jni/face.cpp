@@ -753,8 +753,6 @@ static void compute_detect_to_roi(Object& obj, const int& target_size)
     obj.pos[2].x = +dx;  obj.pos[2].y = +dy;
     obj.pos[3].x = -dx;  obj.pos[3].y = +dy;
 
-    //hand_cx = (obj.pts[0].x + obj.pts[1].x + obj.pts[2].x+obj.pts[3].x+obj.pts[4].x) / 5;
-    //hand_cy = (obj.pts[0].y + obj.pts[1].y + obj.pts[2].y + obj.pts[3].y + obj.pts[4].y) / 5;
     hand_cx = palm_cx;
     hand_cy = palm_cy;
     for (int i = 0; i < 4; i++)
@@ -804,9 +802,6 @@ int Face::detect(const cv::Mat& rgb, std::vector<Object>& objects,float prob_thr
     ex.input("data", in_pad);
 
     std::vector<Object> proposals;
-
-    // anchor setting from yolov5/models/yolov5s.yaml
-
 
     // stride 8
     {
@@ -913,10 +908,8 @@ int Face::detect(const cv::Mat& rgb, std::vector<Object>& objects,float prob_thr
         cv::Mat trans_mat_inv;
         cv::invertAffineTransform(trans_mat, trans_mat_inv);
 
-        landmark.detect(objects[i].trans_image, trans_mat_inv, objects[i].skeleton);
-
+        landmark.detect(objects[i].trans_image, trans_mat_inv, objects[i].skeleton, objects[i].left_eyes,objects[i].right_eyes);
     }
-
 
     return 0;
 }
@@ -954,7 +947,7 @@ int Face::load(AAssetManager* mgr, const char* modeltype, int _target_size, bool
     blazepalm_net.load_param(mgr, parampath);
     blazepalm_net.load_model(mgr, modelpath);
 
-    landmark.load(mgr,"face_mesh");
+    landmark.load(mgr,"face_mesh_new");
 
     target_size = _target_size;
 
@@ -970,19 +963,23 @@ int Face::draw(cv::Mat& rgb, const std::vector<Object>& objects)
 
         for(int j = 0; j < 468; j++)
             cv::circle(rgb, objects[i].skeleton[j], 2, cv::Scalar(0,255,255),-1);
-        //for(int j = 0; j < 124; j++)
-        //{
-        //    cv::Point2f p1 = objects[i].skeleton[FACE_CONNECTIONS[j][0]];
-        //    cv::Point2f p2 = objects[i].skeleton[FACE_CONNECTIONS[j][1]];
-        //    cv::line(rgb, p1, p2, cv::Scalar(255,255,0),2);
-        //}
-
+        for (int j = 0; j < 8; j++)
+        {
+            cv::line(rgb, objects[i].left_eyes[j], objects[i].left_eyes[j+1], cv::Scalar(0, 255, 0), 2);
+            cv::line(rgb, objects[i].right_eyes[j], objects[i].right_eyes[j+1], cv::Scalar(0, 255, 0), 2);
+        }
+        for (int j = 9; j < 15; j++)
+        {
+            cv::line(rgb, objects[i].left_eyes[j], objects[i].left_eyes[j+1], cv::Scalar(0, 255, 0), 2);
+            cv::line(rgb, objects[i].right_eyes[j], objects[i].right_eyes[j+1], cv::Scalar(0, 255, 0), 2);
+        }
         for(int j = 0; j < 40; j++)
         {
             cv::Point2f p1 = objects[i].skeleton[FACEMESH_LIPS[j][0]];
             cv::Point2f p2 = objects[i].skeleton[FACEMESH_LIPS[j][1]];
             cv::line(rgb, p1, p2, cv::Scalar(255,0,0),2);
         }
+        /*
         for(int j = 0; j < 16; j++)
         {
             cv::Point2f p1 = objects[i].skeleton[FACEMESH_LEFT_EYE[j][0]];
@@ -995,6 +992,7 @@ int Face::draw(cv::Mat& rgb, const std::vector<Object>& objects)
             cv::Point2f p2 = objects[i].skeleton[FACEMESH_RIGHT_EYE[j][1]];
             cv::line(rgb, p1, p2, cv::Scalar(255,0,0),2);
         }
+        */
         for(int j = 0; j < 8; j++)
         {
             cv::Point2f p1 = objects[i].skeleton[FACEMESH_LEFT_EYEBROW[j][0]];
@@ -1007,6 +1005,7 @@ int Face::draw(cv::Mat& rgb, const std::vector<Object>& objects)
             cv::Point2f p2 = objects[i].skeleton[FACEMESH_RIGHT_EYEBROW[j][1]];
             cv::line(rgb, p1, p2, cv::Scalar(255,0,0),2);
         }
+
         for (int j = 0; j < 2556; j++)
         {
             cv::Point2f p1 = objects[i].skeleton[FACEMESH_TESSELATION[j][0]];

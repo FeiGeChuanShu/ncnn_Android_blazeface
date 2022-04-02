@@ -35,7 +35,8 @@ https://github.com/nihui/opencv-mobile
 * FPS may be lower in dark environment because of longer camera exposure time
 
 ## screenshot
-![](screenshot.png)![](face_mesh.gif)  
+![](face_mesh.gif)![](face_mesh_new.png)  
+![](screenshot.png)
 
 ## reference  
 1.https://github.com/PaddlePaddle/PaddleDetection/blob/release/2.3/configs/face_detection/README.md  
