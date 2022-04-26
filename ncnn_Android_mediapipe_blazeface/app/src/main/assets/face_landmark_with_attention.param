@@ -1,0 +1,393 @@
+7767517
+391 461    
+Input                    net/input                    0 1 net/input
+Convolution              net/Conv__840                1 1 net/input net/Conv__840:0 0=16 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=1 6=432
+PReLU                    net/PRelu_1                  1 1 net/Conv__840:0 net/p_re_lu/Alpha_dequantize_prelu/add:0 0=16
+Split                    net/splitncnn_0              1 2 net/p_re_lu/Alpha_dequantize_prelu/add:0 net/p_re_lu/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise                1 1 net/p_re_lu/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise:0 0=16 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=144 7=16
+Convolution              net/Conv__843                1 1 net/depthwise:0 net/Conv__843:0 0=16 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=256
+BinaryOp                 net/add__xeno_compat__1      2 1 net/p_re_lu/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__843:0 net/add__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_2                  1 1 net/add__xeno_compat__1:0 net/p_re_lu_1/Alpha_dequantize_prelu/add:0 0=16
+Split                    net/splitncnn_1              1 2 net/p_re_lu_1/Alpha_dequantize_prelu/add:0 net/p_re_lu_1/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_1/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_1              1 1 net/p_re_lu_1/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_1:0 0=16 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=144 7=16
+Convolution              net/Conv__850                1 1 net/depthwise_1:0 net/Conv__850:0 0=16 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=256
+BinaryOp                 net/add_1__xeno_compat__1    2 1 net/p_re_lu_1/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__850:0 net/add_1__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_3                  1 1 net/add_1__xeno_compat__1:0 net/p_re_lu_2/Alpha_dequantize_prelu/add:0 0=16
+Split                    net/splitncnn_2              1 2 net/p_re_lu_2/Alpha_dequantize_prelu/add:0 net/p_re_lu_2/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_2/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  net/max_pooling2d            1 1 net/p_re_lu_2/Alpha_dequantize_prelu/add:0_splitncnn_1 net/max_pooling2d:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  net/channel_padding          1 1 net/max_pooling2d:0 net/channel_padding:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=16
+ConvolutionDepthWise     net/depthwise_2              1 1 net/p_re_lu_2/Alpha_dequantize_prelu/add:0_splitncnn_0 net/depthwise_2:0 0=16 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=144 7=16
+Convolution              net/Conv__863                1 1 net/depthwise_2:0 net/Conv__863:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=512
+BinaryOp                 net/add_2__xeno_compat__1    2 1 net/channel_padding:0 net/Conv__863:0 net/add_2__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_4                  1 1 net/add_2__xeno_compat__1:0 net/p_re_lu_3/Alpha_dequantize_prelu/add:0 0=32
+Split                    net/splitncnn_tmp            1 2 net/p_re_lu_3/Alpha_dequantize_prelu/add:0 net/p_re_lu_3_splitncnn1_0 net/p_re_lu_3_splitncnn1_1
+Permute                  net/features_0               1 1 net/p_re_lu_3_splitncnn1_0 net/features 0=3
+Split                    net/splitncnn_3              1 2 net/p_re_lu_3_splitncnn1_1 net/p_re_lu_3/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_3/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_3              1 1 net/p_re_lu_3/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_3:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              net/Conv__864                1 1 net/depthwise_3:0 net/Conv__864:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 net/add_3__xeno_compat__1    2 1 net/p_re_lu_3/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__864:0 net/add_3__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_5                  1 1 net/add_3__xeno_compat__1:0 net/p_re_lu_4/Alpha_dequantize_prelu/add:0 0=32
+Split                    net/splitncnn_4              1 2 net/p_re_lu_4/Alpha_dequantize_prelu/add:0 net/p_re_lu_4/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_4/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_4              1 1 net/p_re_lu_4/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_4:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              net/Conv__871                1 1 net/depthwise_4:0 net/Conv__871:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 net/add_4__xeno_compat__1    2 1 net/p_re_lu_4/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__871:0 net/add_4__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_6                  1 1 net/add_4__xeno_compat__1:0 net/p_re_lu_5/Alpha_dequantize_prelu/add:0 0=32
+Split                    net/splitncnn_5              1 2 net/p_re_lu_5/Alpha_dequantize_prelu/add:0 net/p_re_lu_5/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_5/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  net/max_pooling2d_1          1 1 net/p_re_lu_5/Alpha_dequantize_prelu/add:0_splitncnn_1 net/max_pooling2d_1:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  net/channel_padding_1        1 1 net/max_pooling2d_1:0 net/channel_padding_1:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=32
+ConvolutionDepthWise     net/depthwise_5              1 1 net/p_re_lu_5/Alpha_dequantize_prelu/add:0_splitncnn_0 net/depthwise_5:0 0=32 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=288 7=32
+Convolution              net/Conv__884                1 1 net/depthwise_5:0 net/Conv__884:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=2048
+BinaryOp                 net/add_5__xeno_compat__1    2 1 net/channel_padding_1:0 net/Conv__884:0 net/add_5__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_7                  1 1 net/add_5__xeno_compat__1:0 net/p_re_lu_6/Alpha_dequantize_prelu/add:0 0=64
+Split                    net/splitncnn_6              1 2 net/p_re_lu_6/Alpha_dequantize_prelu/add:0 net/p_re_lu_6/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_6/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_6              1 1 net/p_re_lu_6/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_6:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              net/Conv__885                1 1 net/depthwise_6:0 net/Conv__885:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 net/add_6__xeno_compat__1    2 1 net/p_re_lu_6/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__885:0 net/add_6__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_8                  1 1 net/add_6__xeno_compat__1:0 net/p_re_lu_7/Alpha_dequantize_prelu/add:0 0=64
+Split                    net/splitncnn_7              1 2 net/p_re_lu_7/Alpha_dequantize_prelu/add:0 net/p_re_lu_7/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_7/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_7              1 1 net/p_re_lu_7/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_7:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              net/Conv__892                1 1 net/depthwise_7:0 net/Conv__892:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 net/add_7__xeno_compat__1    2 1 net/p_re_lu_7/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__892:0 net/add_7__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_9                  1 1 net/add_7__xeno_compat__1:0 net/p_re_lu_8/Alpha_dequantize_prelu/add:0 0=64
+Split                    net/splitncnn_8              1 2 net/p_re_lu_8/Alpha_dequantize_prelu/add:0 net/p_re_lu_8/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_8/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  net/max_pooling2d_2          1 1 net/p_re_lu_8/Alpha_dequantize_prelu/add:0_splitncnn_1 net/max_pooling2d_2:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  net/channel_padding_2        1 1 net/max_pooling2d_2:0 net/channel_padding_2:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=64
+ConvolutionDepthWise     net/depthwise_8              1 1 net/p_re_lu_8/Alpha_dequantize_prelu/add:0_splitncnn_0 net/depthwise_8:0 0=64 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=576 7=64
+Convolution              net/Conv__905                1 1 net/depthwise_8:0 net/Conv__905:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=8192
+BinaryOp                 net/add_8__xeno_compat__1    2 1 net/channel_padding_2:0 net/Conv__905:0 net/add_8__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_10                 1 1 net/add_8__xeno_compat__1:0 net/p_re_lu_9/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_9              1 2 net/p_re_lu_9/Alpha_dequantize_prelu/add:0 net/p_re_lu_9/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_9/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_9              1 1 net/p_re_lu_9/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_9:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__906                1 1 net/depthwise_9:0 net/Conv__906:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_9__xeno_compat__1    2 1 net/p_re_lu_9/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__906:0 net/add_9__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_11                 1 1 net/add_9__xeno_compat__1:0 net/p_re_lu_10/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_10             1 2 net/p_re_lu_10/Alpha_dequantize_prelu/add:0 net/p_re_lu_10/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_10/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_10             1 1 net/p_re_lu_10/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_10:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__913                1 1 net/depthwise_10:0 net/Conv__913:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_10__xeno_compat__1   2 1 net/p_re_lu_10/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__913:0 net/add_10__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_12                 1 1 net/add_10__xeno_compat__1:0 net/p_re_lu_11/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_11             1 2 net/p_re_lu_11/Alpha_dequantize_prelu/add:0 net/p_re_lu_11/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_11/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  net/max_pooling2d_3          1 1 net/p_re_lu_11/Alpha_dequantize_prelu/add:0_splitncnn_1 net/max_pooling2d_3:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     net/depthwise_11             1 1 net/p_re_lu_11/Alpha_dequantize_prelu/add:0_splitncnn_0 net/depthwise_11:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__926                1 1 net/depthwise_11:0 net/Conv__926:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_11__xeno_compat__1   2 1 net/max_pooling2d_3:0 net/Conv__926:0 net/add_11__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_13                 1 1 net/add_11__xeno_compat__1:0 net/p_re_lu_12/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_12             1 2 net/p_re_lu_12/Alpha_dequantize_prelu/add:0 net/p_re_lu_12/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_12/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_12             1 1 net/p_re_lu_12/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_12:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__927                1 1 net/depthwise_12:0 net/Conv__927:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_12__xeno_compat__1   2 1 net/p_re_lu_12/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__927:0 net/add_12__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_14                 1 1 net/add_12__xeno_compat__1:0 net/p_re_lu_13/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_13             1 2 net/p_re_lu_13/Alpha_dequantize_prelu/add:0 net/p_re_lu_13/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_13/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_13             1 1 net/p_re_lu_13/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_13:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__934                1 1 net/depthwise_13:0 net/Conv__934:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_13__xeno_compat__1   2 1 net/p_re_lu_13/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__934:0 net/add_13__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_15                 1 1 net/add_13__xeno_compat__1:0 net/p_re_lu_14/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_14             1 2 net/p_re_lu_14/Alpha_dequantize_prelu/add:0 net/p_re_lu_14/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_14/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  net/max_pooling2d_4          1 1 net/p_re_lu_14/Alpha_dequantize_prelu/add:0_splitncnn_1 net/max_pooling2d_4:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     net/depthwise_14             1 1 net/p_re_lu_14/Alpha_dequantize_prelu/add:0_splitncnn_0 net/depthwise_14:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__947                1 1 net/depthwise_14:0 net/Conv__947:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_14__xeno_compat__1   2 1 net/max_pooling2d_4:0 net/Conv__947:0 net/add_14__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_16                 1 1 net/add_14__xeno_compat__1:0 net/p_re_lu_15/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_15             1 2 net/p_re_lu_15/Alpha_dequantize_prelu/add:0 net/p_re_lu_15/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_15/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_15             1 1 net/p_re_lu_15/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_15:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__948                1 1 net/depthwise_15:0 net/Conv__948:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_15__xeno_compat__1   2 1 net/p_re_lu_15/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__948:0 net/add_15__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_17                 1 1 net/add_15__xeno_compat__1:0 net/p_re_lu_16/Alpha_dequantize_prelu/add:0 0=128
+Split                    net/splitncnn_16             1 2 net/p_re_lu_16/Alpha_dequantize_prelu/add:0 net/p_re_lu_16/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_16/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_16             1 1 net/p_re_lu_16/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_16:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              net/Conv__955                1 1 net/depthwise_16:0 net/Conv__955:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 net/add_16__xeno_compat__1   2 1 net/p_re_lu_16/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__955:0 net/add_16__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_18                 1 1 net/add_16__xeno_compat__1:0 net/p_re_lu_17/Alpha_dequantize_prelu/add:0 0=128
+Convolution              net/Conv__962                1 1 net/p_re_lu_17/Alpha_dequantize_prelu/add:0 net/Conv__962:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+PReLU                    net/PRelu_19                 1 1 net/Conv__962:0 net/p_re_lu_18/Alpha_dequantize_prelu/add:0 0=32
+Split                    net/splitncnn_17             1 2 net/p_re_lu_18/Alpha_dequantize_prelu/add:0 net/p_re_lu_18/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_18/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     net/depthwise_17             1 1 net/p_re_lu_18/Alpha_dequantize_prelu/add:0_splitncnn_1 net/depthwise_17:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              net/Conv__965                1 1 net/depthwise_17:0 net/Conv__965:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 net/add_17__xeno_compat__1   2 1 net/p_re_lu_18/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__965:0 net/add_17__xeno_compat__1:0 0=0
+PReLU                    net/PRelu_20                 1 1 net/add_17__xeno_compat__1:0 net/p_re_lu_19/Alpha_dequantize_prelu/add:0 0=32
+Split                    net/splitncnn_18             1 2 net/p_re_lu_19/Alpha_dequantize_prelu/add:0 net/p_re_lu_19/Alpha_dequantize_prelu/add:0_splitncnn_0 net/p_re_lu_19/Alpha_dequantize_prelu/add:0_splitncnn_1
+Convolution              net/Conv__973                1 1 net/p_re_lu_19/Alpha_dequantize_prelu/add:0_splitncnn_1 net/Conv__973:0 0=1404 1=3 11=3 2=1 12=1 3=3 13=3 5=1 6=404352
+Crop                     net/output_mesh_identity     1 1 net/Conv__973:0 net/output_mesh_identity_raw_output___12:0 -23309=3,0,0,0 -23310=3,1,1,1404 -23311=3,1,2,0
+Reshape                  net/Transpose__976           1 1 net/output_mesh_identity_raw_output___12:0 net/output 0=1404 1=1 2=1
+Convolution              net/Conv__972                1 1 net/p_re_lu_19/Alpha_dequantize_prelu/add:0_splitncnn_0 net/Conv__972:0 0=1 1=3 11=3 2=1 12=1 3=3 13=3 5=1 6=288
+Input                    left/input                    0 1 left/input
+Permute                  left/depthwise_19__521        1 1 left/input left/depthwise_19__521:0 0=4
+Split                    left/splitncnn_0              1 2 left/depthwise_19__521:0 left/depthwise_19__521:0_splitncnn_0 left/depthwise_19__521:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_19             1 1 left/depthwise_19__521:0_splitncnn_1 left/depthwise_19:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              left/Conv__1128               1 1 left/depthwise_19:0 left/Conv__1128:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 left/add_30__xeno_compat__1   2 1 left/depthwise_19__521:0_splitncnn_0 left/Conv__1128:0 left/add_30__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_1                  1 1 left/add_30__xeno_compat__1:0 left/p_re_lu_33/Alpha_dequantize_prelu/add:0 0=32
+Split                    left/splitncnn_1              1 2 left/p_re_lu_33/Alpha_dequantize_prelu/add:0 left/p_re_lu_33/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_33/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_22             1 1 left/p_re_lu_33/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_22:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              left/Conv__1135               1 1 left/depthwise_22:0 left/Conv__1135:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 left/add_31__xeno_compat__1   2 1 left/p_re_lu_33/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1135:0 left/add_31__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_2                  1 1 left/add_31__xeno_compat__1:0 left/p_re_lu_34/Alpha_dequantize_prelu/add:0 0=32
+Split                    left/splitncnn_2              1 2 left/p_re_lu_34/Alpha_dequantize_prelu/add:0 left/p_re_lu_34/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_34/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  left/max_pooling2d_8          1 1 left/p_re_lu_34/Alpha_dequantize_prelu/add:0_splitncnn_1 left/max_pooling2d_8:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  left/channel_padding_5        1 1 left/max_pooling2d_8:0 left/channel_padding_5:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=32
+ConvolutionDepthWise     left/depthwise_25             1 1 left/p_re_lu_34/Alpha_dequantize_prelu/add:0_splitncnn_0 left/depthwise_25:0 0=32 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=288 7=32
+Convolution              left/Conv__1148               1 1 left/depthwise_25:0 left/Conv__1148:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=2048
+BinaryOp                 left/add_32__xeno_compat__1   2 1 left/channel_padding_5:0 left/Conv__1148:0 left/add_32__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_3                  1 1 left/add_32__xeno_compat__1:0 left/p_re_lu_35/Alpha_dequantize_prelu/add:0 0=64
+Split                    left/splitncnn_3              1 2 left/p_re_lu_35/Alpha_dequantize_prelu/add:0 left/p_re_lu_35/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_35/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_28             1 1 left/p_re_lu_35/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_28:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              left/Conv__1149               1 1 left/depthwise_28:0 left/Conv__1149:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 left/add_33__xeno_compat__1   2 1 left/p_re_lu_35/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1149:0 left/add_33__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_4                  1 1 left/add_33__xeno_compat__1:0 left/p_re_lu_36/Alpha_dequantize_prelu/add:0 0=64
+Split                    left/splitncnn_4              1 2 left/p_re_lu_36/Alpha_dequantize_prelu/add:0 left/p_re_lu_36/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_36/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_31             1 1 left/p_re_lu_36/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_31:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              left/Conv__1156               1 1 left/depthwise_31:0 left/Conv__1156:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 left/add_34__xeno_compat__1   2 1 left/p_re_lu_36/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1156:0 left/add_34__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_5                  1 1 left/add_34__xeno_compat__1:0 left/p_re_lu_37/Alpha_dequantize_prelu/add:0 0=64
+Split                    left/splitncnn_5              1 2 left/p_re_lu_37/Alpha_dequantize_prelu/add:0 left/p_re_lu_37/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_37/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  left/max_pooling2d_9          1 1 left/p_re_lu_37/Alpha_dequantize_prelu/add:0_splitncnn_1 left/max_pooling2d_9:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  left/channel_padding_6        1 1 left/max_pooling2d_9:0 left/channel_padding_6:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=64
+ConvolutionDepthWise     left/depthwise_34             1 1 left/p_re_lu_37/Alpha_dequantize_prelu/add:0_splitncnn_0 left/depthwise_34:0 0=64 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=576 7=64
+Convolution              left/Conv__1169               1 1 left/depthwise_34:0 left/Conv__1169:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=8192
+BinaryOp                 left/add_35__xeno_compat__1   2 1 left/channel_padding_6:0 left/Conv__1169:0 left/add_35__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_6                  1 1 left/add_35__xeno_compat__1:0 left/p_re_lu_38/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_6              1 4 left/p_re_lu_38/Alpha_dequantize_prelu/add:0 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_1 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_2 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_3
+ConvolutionDepthWise     left/depthwise_38             1 1 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_3 left/depthwise_38:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1170               1 1 left/depthwise_38:0 left/Conv__1170:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+ConvolutionDepthWise     left/depthwise_37             1 1 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_2 left/depthwise_37:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1177               1 1 left/depthwise_37:0 left/Conv__1177:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_42__xeno_compat__1   2 1 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_1 left/Conv__1170:0 left/add_42__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_7                  1 1 left/add_42__xeno_compat__1:0 left/p_re_lu_46/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_7              1 2 left/p_re_lu_46/Alpha_dequantize_prelu/add:0 left/p_re_lu_46/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_46/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_43             1 1 left/p_re_lu_46/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_43:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1184               1 1 left/depthwise_43:0 left/Conv__1184:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_43__xeno_compat__1   2 1 left/p_re_lu_46/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1184:0 left/add_43__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_8                  1 1 left/add_43__xeno_compat__1:0 left/p_re_lu_47/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_8              1 2 left/p_re_lu_47/Alpha_dequantize_prelu/add:0 left/p_re_lu_47/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_47/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  left/max_pooling2d_11         1 1 left/p_re_lu_47/Alpha_dequantize_prelu/add:0_splitncnn_1 left/max_pooling2d_11:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     left/depthwise_48             1 1 left/p_re_lu_47/Alpha_dequantize_prelu/add:0_splitncnn_0 left/depthwise_48:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1197               1 1 left/depthwise_48:0 left/Conv__1197:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_44__xeno_compat__1   2 1 left/max_pooling2d_11:0 left/Conv__1197:0 left/add_44__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_9                  1 1 left/add_44__xeno_compat__1:0 left/p_re_lu_48/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_9              1 2 left/p_re_lu_48/Alpha_dequantize_prelu/add:0 left/p_re_lu_48/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_48/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_53             1 1 left/p_re_lu_48/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_53:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1198               1 1 left/depthwise_53:0 left/Conv__1198:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_45__xeno_compat__1   2 1 left/p_re_lu_48/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1198:0 left/add_45__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_10                 1 1 left/add_45__xeno_compat__1:0 left/p_re_lu_49/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_10             1 2 left/p_re_lu_49/Alpha_dequantize_prelu/add:0 left/p_re_lu_49/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_49/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_58             1 1 left/p_re_lu_49/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_58:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1205               1 1 left/depthwise_58:0 left/Conv__1205:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_46__xeno_compat__1   2 1 left/p_re_lu_49/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1205:0 left/add_46__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_11                 1 1 left/add_46__xeno_compat__1:0 left/p_re_lu_50/Alpha_dequantize_prelu/add:0 0=128
+Convolution              left/Conv__1212               1 1 left/p_re_lu_50/Alpha_dequantize_prelu/add:0 left/Conv__1212:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+PReLU                    left/PRelu_12                 1 1 left/Conv__1212:0 left/p_re_lu_51/Alpha_dequantize_prelu/add:0 0=32
+Split                    left/splitncnn_11             1 2 left/p_re_lu_51/Alpha_dequantize_prelu/add:0 left/p_re_lu_51/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_51/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_63             1 1 left/p_re_lu_51/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_63:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              left/Conv__1215               1 1 left/depthwise_63:0 left/Conv__1215:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 left/add_47__xeno_compat__1   2 1 left/p_re_lu_51/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1215:0 left/add_47__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_13                 1 1 left/add_47__xeno_compat__1:0 left/p_re_lu_52/Alpha_dequantize_prelu/add:0 0=32
+Convolution              left/Conv__1222               1 1 left/p_re_lu_52/Alpha_dequantize_prelu/add:0 left/Conv__1222:0 0=10 1=2 11=2 2=1 12=1 3=2 13=2 5=1 6=1280
+Reshape                  left/reshape_4_1              1 1 left/Conv__1222:0 left/iris 0=2 1=5
+BinaryOp                 left/add_36__xeno_compat__1   2 1 left/p_re_lu_38/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1177:0 left/add_36__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_14                 1 1 left/add_36__xeno_compat__1:0 left/p_re_lu_39/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_12             1 2 left/p_re_lu_39/Alpha_dequantize_prelu/add:0 left/p_re_lu_39/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_39/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_42             1 1 left/p_re_lu_39/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_42:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1223               1 1 left/depthwise_42:0 left/Conv__1223:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_37__xeno_compat__1   2 1 left/p_re_lu_39/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1223:0 left/add_37__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_15                 1 1 left/add_37__xeno_compat__1:0 left/p_re_lu_40/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_13             1 2 left/p_re_lu_40/Alpha_dequantize_prelu/add:0 left/p_re_lu_40/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_40/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  left/max_pooling2d_10         1 1 left/p_re_lu_40/Alpha_dequantize_prelu/add:0_splitncnn_1 left/max_pooling2d_10:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     left/depthwise_47             1 1 left/p_re_lu_40/Alpha_dequantize_prelu/add:0_splitncnn_0 left/depthwise_47:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1236               1 1 left/depthwise_47:0 left/Conv__1236:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_38__xeno_compat__1   2 1 left/max_pooling2d_10:0 left/Conv__1236:0 left/add_38__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_16                 1 1 left/add_38__xeno_compat__1:0 left/p_re_lu_41/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_14             1 2 left/p_re_lu_41/Alpha_dequantize_prelu/add:0 left/p_re_lu_41/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_41/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_52             1 1 left/p_re_lu_41/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_52:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1237               1 1 left/depthwise_52:0 left/Conv__1237:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_39__xeno_compat__1   2 1 left/p_re_lu_41/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1237:0 left/add_39__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_17                 1 1 left/add_39__xeno_compat__1:0 left/p_re_lu_42/Alpha_dequantize_prelu/add:0 0=128
+Split                    left/splitncnn_15             1 2 left/p_re_lu_42/Alpha_dequantize_prelu/add:0 left/p_re_lu_42/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_42/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_57             1 1 left/p_re_lu_42/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_57:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              left/Conv__1244               1 1 left/depthwise_57:0 left/Conv__1244:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 left/add_40__xeno_compat__1   2 1 left/p_re_lu_42/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1244:0 left/add_40__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_18                 1 1 left/add_40__xeno_compat__1:0 left/p_re_lu_43/Alpha_dequantize_prelu/add:0 0=128
+Convolution              left/Conv__1251               1 1 left/p_re_lu_43/Alpha_dequantize_prelu/add:0 left/Conv__1251:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+PReLU                    left/PRelu_19                 1 1 left/Conv__1251:0 left/p_re_lu_44/Alpha_dequantize_prelu/add:0 0=32
+Split                    left/splitncnn_16             1 2 left/p_re_lu_44/Alpha_dequantize_prelu/add:0 left/p_re_lu_44/Alpha_dequantize_prelu/add:0_splitncnn_0 left/p_re_lu_44/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     left/depthwise_62             1 1 left/p_re_lu_44/Alpha_dequantize_prelu/add:0_splitncnn_1 left/depthwise_62:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              left/Conv__1254               1 1 left/depthwise_62:0 left/Conv__1254:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 left/add_41__xeno_compat__1   2 1 left/p_re_lu_44/Alpha_dequantize_prelu/add:0_splitncnn_0 left/Conv__1254:0 left/add_41__xeno_compat__1:0 0=0
+PReLU                    left/PRelu_20                 1 1 left/add_41__xeno_compat__1:0 left/p_re_lu_45/Alpha_dequantize_prelu/add:0 0=32
+Convolution              left/Conv__1261               1 1 left/p_re_lu_45/Alpha_dequantize_prelu/add:0 left/Conv__1261:0 0=142 1=2 11=2 2=1 12=1 3=2 13=2 5=1 6=18176
+Reshape                  left/reshape_3_1              1 1 left/Conv__1261:0 left/eye 0=2 1=71
+Input                    right/input                    0 1 right/input
+Permute                  right/depthwise_20__316        1 1 right/input right/depthwise_20__316:0 0=4
+Split                    right/splitncnn_0              1 2 right/depthwise_20__316:0 right/depthwise_20__316:0_splitncnn_0 right/depthwise_20__316:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_20             1 1 right/depthwise_20__316:0_splitncnn_1 right/depthwise_20:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              right/Conv__994                1 1 right/depthwise_20:0 right/Conv__994:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 right/add_48__xeno_compat__1   2 1 right/depthwise_20__316:0_splitncnn_0 right/Conv__994:0 right/add_48__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_1                  1 1 right/add_48__xeno_compat__1:0 right/p_re_lu_53/Alpha_dequantize_prelu/add:0 0=32
+Split                    right/splitncnn_1              1 2 right/p_re_lu_53/Alpha_dequantize_prelu/add:0 right/p_re_lu_53/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_53/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_23             1 1 right/p_re_lu_53/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_23:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              right/Conv__1001               1 1 right/depthwise_23:0 right/Conv__1001:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 right/add_49__xeno_compat__1   2 1 right/p_re_lu_53/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1001:0 right/add_49__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_2                  1 1 right/add_49__xeno_compat__1:0 right/p_re_lu_54/Alpha_dequantize_prelu/add:0 0=32
+Split                    right/splitncnn_2              1 2 right/p_re_lu_54/Alpha_dequantize_prelu/add:0 right/p_re_lu_54/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_54/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  right/max_pooling2d_12         1 1 right/p_re_lu_54/Alpha_dequantize_prelu/add:0_splitncnn_1 right/max_pooling2d_12:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  right/channel_padding_7        1 1 right/max_pooling2d_12:0 right/channel_padding_7:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=32
+ConvolutionDepthWise     right/depthwise_26             1 1 right/p_re_lu_54/Alpha_dequantize_prelu/add:0_splitncnn_0 right/depthwise_26:0 0=32 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=288 7=32
+Convolution              right/Conv__1014               1 1 right/depthwise_26:0 right/Conv__1014:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=2048
+BinaryOp                 right/add_50__xeno_compat__1   2 1 right/channel_padding_7:0 right/Conv__1014:0 right/add_50__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_3                  1 1 right/add_50__xeno_compat__1:0 right/p_re_lu_55/Alpha_dequantize_prelu/add:0 0=64
+Split                    right/splitncnn_3              1 2 right/p_re_lu_55/Alpha_dequantize_prelu/add:0 right/p_re_lu_55/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_55/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_29             1 1 right/p_re_lu_55/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_29:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              right/Conv__1015               1 1 right/depthwise_29:0 right/Conv__1015:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 right/add_51__xeno_compat__1   2 1 right/p_re_lu_55/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1015:0 right/add_51__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_4                  1 1 right/add_51__xeno_compat__1:0 right/p_re_lu_56/Alpha_dequantize_prelu/add:0 0=64
+Split                    right/splitncnn_4              1 2 right/p_re_lu_56/Alpha_dequantize_prelu/add:0 right/p_re_lu_56/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_56/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_32             1 1 right/p_re_lu_56/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_32:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              right/Conv__1022               1 1 right/depthwise_32:0 right/Conv__1022:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 right/add_52__xeno_compat__1   2 1 right/p_re_lu_56/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1022:0 right/add_52__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_5                  1 1 right/add_52__xeno_compat__1:0 right/p_re_lu_57/Alpha_dequantize_prelu/add:0 0=64
+Split                    right/splitncnn_5              1 2 right/p_re_lu_57/Alpha_dequantize_prelu/add:0 right/p_re_lu_57/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_57/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  right/max_pooling2d_13         1 1 right/p_re_lu_57/Alpha_dequantize_prelu/add:0_splitncnn_1 right/max_pooling2d_13:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  right/channel_padding_8        1 1 right/max_pooling2d_13:0 right/channel_padding_8:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=64
+ConvolutionDepthWise     right/depthwise_35             1 1 right/p_re_lu_57/Alpha_dequantize_prelu/add:0_splitncnn_0 right/depthwise_35:0 0=64 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=576 7=64
+Convolution              right/Conv__1035               1 1 right/depthwise_35:0 right/Conv__1035:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=8192
+BinaryOp                 right/add_53__xeno_compat__1   2 1 right/channel_padding_8:0 right/Conv__1035:0 right/add_53__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_6                  1 1 right/add_53__xeno_compat__1:0 right/p_re_lu_58/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_6              1 4 right/p_re_lu_58/Alpha_dequantize_prelu/add:0 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_1 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_2 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_3
+ConvolutionDepthWise     right/depthwise_40             1 1 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_3 right/depthwise_40:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1036               1 1 right/depthwise_40:0 right/Conv__1036:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+ConvolutionDepthWise     right/depthwise_39             1 1 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_2 right/depthwise_39:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1043               1 1 right/depthwise_39:0 right/Conv__1043:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_60__xeno_compat__1   2 1 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_1 right/Conv__1036:0 right/add_60__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_7                  1 1 right/add_60__xeno_compat__1:0 right/p_re_lu_66/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_7              1 2 right/p_re_lu_66/Alpha_dequantize_prelu/add:0 right/p_re_lu_66/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_66/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_45             1 1 right/p_re_lu_66/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_45:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1050               1 1 right/depthwise_45:0 right/Conv__1050:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_61__xeno_compat__1   2 1 right/p_re_lu_66/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1050:0 right/add_61__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_8                  1 1 right/add_61__xeno_compat__1:0 right/p_re_lu_67/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_8              1 2 right/p_re_lu_67/Alpha_dequantize_prelu/add:0 right/p_re_lu_67/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_67/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  right/max_pooling2d_15         1 1 right/p_re_lu_67/Alpha_dequantize_prelu/add:0_splitncnn_1 right/max_pooling2d_15:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     right/depthwise_50             1 1 right/p_re_lu_67/Alpha_dequantize_prelu/add:0_splitncnn_0 right/depthwise_50:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1063               1 1 right/depthwise_50:0 right/Conv__1063:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_62__xeno_compat__1   2 1 right/max_pooling2d_15:0 right/Conv__1063:0 right/add_62__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_9                  1 1 right/add_62__xeno_compat__1:0 right/p_re_lu_68/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_9              1 2 right/p_re_lu_68/Alpha_dequantize_prelu/add:0 right/p_re_lu_68/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_68/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_55             1 1 right/p_re_lu_68/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_55:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1064               1 1 right/depthwise_55:0 right/Conv__1064:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_63__xeno_compat__1   2 1 right/p_re_lu_68/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1064:0 right/add_63__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_10                 1 1 right/add_63__xeno_compat__1:0 right/p_re_lu_69/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_10             1 2 right/p_re_lu_69/Alpha_dequantize_prelu/add:0 right/p_re_lu_69/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_69/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_60             1 1 right/p_re_lu_69/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_60:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1071               1 1 right/depthwise_60:0 right/Conv__1071:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_64__xeno_compat__1   2 1 right/p_re_lu_69/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1071:0 right/add_64__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_11                 1 1 right/add_64__xeno_compat__1:0 right/p_re_lu_70/Alpha_dequantize_prelu/add:0 0=128
+Convolution              right/Conv__1078               1 1 right/p_re_lu_70/Alpha_dequantize_prelu/add:0 right/Conv__1078:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+PReLU                    right/PRelu_12                 1 1 right/Conv__1078:0 right/p_re_lu_71/Alpha_dequantize_prelu/add:0 0=32
+Split                    right/splitncnn_11             1 2 right/p_re_lu_71/Alpha_dequantize_prelu/add:0 right/p_re_lu_71/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_71/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_65             1 1 right/p_re_lu_71/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_65:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              right/Conv__1081               1 1 right/depthwise_65:0 right/Conv__1081:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 right/add_65__xeno_compat__1   2 1 right/p_re_lu_71/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1081:0 right/add_65__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_13                 1 1 right/add_65__xeno_compat__1:0 right/p_re_lu_72/Alpha_dequantize_prelu/add:0 0=32
+Convolution              right/Conv__1088               1 1 right/p_re_lu_72/Alpha_dequantize_prelu/add:0 right/Conv__1088:0 0=10 1=2 11=2 2=1 12=1 3=2 13=2 5=1 6=1280
+Reshape                  right/reshape_7                1 1 right/Conv__1088:0 right/iris 0=2 1=5
+BinaryOp                 right/add_54__xeno_compat__1   2 1 right/p_re_lu_58/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1043:0 right/add_54__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_14                 1 1 right/add_54__xeno_compat__1:0 right/p_re_lu_59/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_12             1 2 right/p_re_lu_59/Alpha_dequantize_prelu/add:0 right/p_re_lu_59/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_59/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_44             1 1 right/p_re_lu_59/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_44:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1089               1 1 right/depthwise_44:0 right/Conv__1089:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_55__xeno_compat__1   2 1 right/p_re_lu_59/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1089:0 right/add_55__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_15                 1 1 right/add_55__xeno_compat__1:0 right/p_re_lu_60/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_13             1 2 right/p_re_lu_60/Alpha_dequantize_prelu/add:0 right/p_re_lu_60/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_60/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  right/max_pooling2d_14         1 1 right/p_re_lu_60/Alpha_dequantize_prelu/add:0_splitncnn_1 right/max_pooling2d_14:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     right/depthwise_49             1 1 right/p_re_lu_60/Alpha_dequantize_prelu/add:0_splitncnn_0 right/depthwise_49:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1102               1 1 right/depthwise_49:0 right/Conv__1102:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_56__xeno_compat__1   2 1 right/max_pooling2d_14:0 right/Conv__1102:0 right/add_56__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_16                 1 1 right/add_56__xeno_compat__1:0 right/p_re_lu_61/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_14             1 2 right/p_re_lu_61/Alpha_dequantize_prelu/add:0 right/p_re_lu_61/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_61/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_54             1 1 right/p_re_lu_61/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_54:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1103               1 1 right/depthwise_54:0 right/Conv__1103:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_57__xeno_compat__1   2 1 right/p_re_lu_61/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1103:0 right/add_57__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_17                 1 1 right/add_57__xeno_compat__1:0 right/p_re_lu_62/Alpha_dequantize_prelu/add:0 0=128
+Split                    right/splitncnn_15             1 2 right/p_re_lu_62/Alpha_dequantize_prelu/add:0 right/p_re_lu_62/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_62/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_59             1 1 right/p_re_lu_62/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_59:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              right/Conv__1110               1 1 right/depthwise_59:0 right/Conv__1110:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 right/add_58__xeno_compat__1   2 1 right/p_re_lu_62/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1110:0 right/add_58__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_18                 1 1 right/add_58__xeno_compat__1:0 right/p_re_lu_63/Alpha_dequantize_prelu/add:0 0=128
+Convolution              right/Conv__1117               1 1 right/p_re_lu_63/Alpha_dequantize_prelu/add:0 right/Conv__1117:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+PReLU                    right/PRelu_19                 1 1 right/Conv__1117:0 right/p_re_lu_64/Alpha_dequantize_prelu/add:0 0=32
+Split                    right/splitncnn_16             1 2 right/p_re_lu_64/Alpha_dequantize_prelu/add:0 right/p_re_lu_64/Alpha_dequantize_prelu/add:0_splitncnn_0 right/p_re_lu_64/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     right/depthwise_64             1 1 right/p_re_lu_64/Alpha_dequantize_prelu/add:0_splitncnn_1 right/depthwise_64:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              right/Conv__1120               1 1 right/depthwise_64:0 right/Conv__1120:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 right/add_59__xeno_compat__1   2 1 right/p_re_lu_64/Alpha_dequantize_prelu/add:0_splitncnn_0 right/Conv__1120:0 right/add_59__xeno_compat__1:0 0=0
+PReLU                    right/PRelu_20                 1 1 right/add_59__xeno_compat__1:0 right/p_re_lu_65/Alpha_dequantize_prelu/add:0 0=32
+Convolution              right/Conv__1127               1 1 right/p_re_lu_65/Alpha_dequantize_prelu/add:0 right/Conv__1127:0 0=142 1=2 11=2 2=1 12=1 3=2 13=2 5=1 6=18176
+Reshape                  right/reshape_6                1 1 right/Conv__1127:0 right/eye 0=2 1=71
+Input                    lips/input                    0 1 lips/input
+Permute                  lips/depthwise_18__734        1 1 lips/input lips/depthwise_18__734:0 0=4
+Split                    lips/splitncnn_0              1 2 lips/depthwise_18__734:0 lips/depthwise_18__734:0_splitncnn_0 lips/depthwise_18__734:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_18             1 1 lips/depthwise_18__734:0_splitncnn_1 lips/depthwise_18:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              lips/Conv__1270               1 1 lips/depthwise_18:0 lips/Conv__1270:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 lips/add_18__xeno_compat__1   2 1 lips/depthwise_18__734:0_splitncnn_0 lips/Conv__1270:0 lips/add_18__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_1                  1 1 lips/add_18__xeno_compat__1:0 lips/p_re_lu_20/Alpha_dequantize_prelu/add:0 0=32
+Split                    lips/splitncnn_1              1 2 lips/p_re_lu_20/Alpha_dequantize_prelu/add:0 lips/p_re_lu_20/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_20/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_21             1 1 lips/p_re_lu_20/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_21:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              lips/Conv__1277               1 1 lips/depthwise_21:0 lips/Conv__1277:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 lips/add_19__xeno_compat__1   2 1 lips/p_re_lu_20/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1277:0 lips/add_19__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_2                  1 1 lips/add_19__xeno_compat__1:0 lips/p_re_lu_21/Alpha_dequantize_prelu/add:0 0=32
+Split                    lips/splitncnn_2              1 2 lips/p_re_lu_21/Alpha_dequantize_prelu/add:0 lips/p_re_lu_21/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_21/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  lips/max_pooling2d_5          1 1 lips/p_re_lu_21/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/max_pooling2d_5:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  lips/channel_padding_3        1 1 lips/max_pooling2d_5:0 lips/channel_padding_3:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=32
+ConvolutionDepthWise     lips/depthwise_24             1 1 lips/p_re_lu_21/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/depthwise_24:0 0=32 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=288 7=32
+Convolution              lips/Conv__1290               1 1 lips/depthwise_24:0 lips/Conv__1290:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=2048
+BinaryOp                 lips/add_20__xeno_compat__1   2 1 lips/channel_padding_3:0 lips/Conv__1290:0 lips/add_20__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_3                  1 1 lips/add_20__xeno_compat__1:0 lips/p_re_lu_22/Alpha_dequantize_prelu/add:0 0=64
+Split                    lips/splitncnn_3              1 2 lips/p_re_lu_22/Alpha_dequantize_prelu/add:0 lips/p_re_lu_22/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_22/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_27             1 1 lips/p_re_lu_22/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_27:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              lips/Conv__1291               1 1 lips/depthwise_27:0 lips/Conv__1291:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 lips/add_21__xeno_compat__1   2 1 lips/p_re_lu_22/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1291:0 lips/add_21__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_4                  1 1 lips/add_21__xeno_compat__1:0 lips/p_re_lu_23/Alpha_dequantize_prelu/add:0 0=64
+Split                    lips/splitncnn_4              1 2 lips/p_re_lu_23/Alpha_dequantize_prelu/add:0 lips/p_re_lu_23/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_23/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_30             1 1 lips/p_re_lu_23/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_30:0 0=64 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=576 7=64
+Convolution              lips/Conv__1298               1 1 lips/depthwise_30:0 lips/Conv__1298:0 0=64 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+BinaryOp                 lips/add_22__xeno_compat__1   2 1 lips/p_re_lu_23/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1298:0 lips/add_22__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_5                  1 1 lips/add_22__xeno_compat__1:0 lips/p_re_lu_24/Alpha_dequantize_prelu/add:0 0=64
+Split                    lips/splitncnn_5              1 2 lips/p_re_lu_24/Alpha_dequantize_prelu/add:0 lips/p_re_lu_24/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_24/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  lips/max_pooling2d_6          1 1 lips/p_re_lu_24/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/max_pooling2d_6:0 0=0 1=2 11=2 2=2 12=2 5=1
+Padding                  lips/channel_padding_4        1 1 lips/max_pooling2d_6:0 lips/channel_padding_4:0 0=0 1=0 2=0 3=0 4=0 5=0.000000e+00 7=0 8=64
+ConvolutionDepthWise     lips/depthwise_33             1 1 lips/p_re_lu_24/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/depthwise_33:0 0=64 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=576 7=64
+Convolution              lips/Conv__1311               1 1 lips/depthwise_33:0 lips/Conv__1311:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=8192
+BinaryOp                 lips/add_23__xeno_compat__1   2 1 lips/channel_padding_4:0 lips/Conv__1311:0 lips/add_23__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_6                  1 1 lips/add_23__xeno_compat__1:0 lips/p_re_lu_25/Alpha_dequantize_prelu/add:0 0=128
+Split                    lips/splitncnn_6              1 2 lips/p_re_lu_25/Alpha_dequantize_prelu/add:0 lips/p_re_lu_25/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_25/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_36             1 1 lips/p_re_lu_25/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_36:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              lips/Conv__1312               1 1 lips/depthwise_36:0 lips/Conv__1312:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 lips/add_24__xeno_compat__1   2 1 lips/p_re_lu_25/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1312:0 lips/add_24__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_7                  1 1 lips/add_24__xeno_compat__1:0 lips/p_re_lu_26/Alpha_dequantize_prelu/add:0 0=128
+Split                    lips/splitncnn_7              1 2 lips/p_re_lu_26/Alpha_dequantize_prelu/add:0 lips/p_re_lu_26/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_26/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_41             1 1 lips/p_re_lu_26/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_41:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              lips/Conv__1319               1 1 lips/depthwise_41:0 lips/Conv__1319:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 lips/add_25__xeno_compat__1   2 1 lips/p_re_lu_26/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1319:0 lips/add_25__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_8                  1 1 lips/add_25__xeno_compat__1:0 lips/p_re_lu_27/Alpha_dequantize_prelu/add:0 0=128
+Split                    lips/splitncnn_8              1 2 lips/p_re_lu_27/Alpha_dequantize_prelu/add:0 lips/p_re_lu_27/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_27/Alpha_dequantize_prelu/add:0_splitncnn_1
+Pooling                  lips/max_pooling2d_7          1 1 lips/p_re_lu_27/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/max_pooling2d_7:0 0=0 1=2 11=2 2=2 12=2 5=1
+ConvolutionDepthWise     lips/depthwise_46             1 1 lips/p_re_lu_27/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/depthwise_46:0 0=128 1=3 11=3 2=1 12=1 3=2 13=2 4=0 14=0 15=1 16=1 5=0 6=1152 7=128
+Convolution              lips/Conv__1332               1 1 lips/depthwise_46:0 lips/Conv__1332:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 lips/add_26__xeno_compat__1   2 1 lips/max_pooling2d_7:0 lips/Conv__1332:0 lips/add_26__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_9                  1 1 lips/add_26__xeno_compat__1:0 lips/p_re_lu_28/Alpha_dequantize_prelu/add:0 0=128
+Split                    lips/splitncnn_9              1 2 lips/p_re_lu_28/Alpha_dequantize_prelu/add:0 lips/p_re_lu_28/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_28/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_51             1 1 lips/p_re_lu_28/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_51:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              lips/Conv__1333               1 1 lips/depthwise_51:0 lips/Conv__1333:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 lips/add_27__xeno_compat__1   2 1 lips/p_re_lu_28/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1333:0 lips/add_27__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_10                 1 1 lips/add_27__xeno_compat__1:0 lips/p_re_lu_29/Alpha_dequantize_prelu/add:0 0=128
+Split                    lips/splitncnn_10             1 2 lips/p_re_lu_29/Alpha_dequantize_prelu/add:0 lips/p_re_lu_29/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_29/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_56             1 1 lips/p_re_lu_29/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_56:0 0=128 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=1152 7=128
+Convolution              lips/Conv__1340               1 1 lips/depthwise_56:0 lips/Conv__1340:0 0=128 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=16384
+BinaryOp                 lips/add_28__xeno_compat__1   2 1 lips/p_re_lu_29/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1340:0 lips/add_28__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_11                 1 1 lips/add_28__xeno_compat__1:0 lips/p_re_lu_30/Alpha_dequantize_prelu/add:0 0=128
+Convolution              lips/Conv__1347               1 1 lips/p_re_lu_30/Alpha_dequantize_prelu/add:0 lips/Conv__1347:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=4096
+PReLU                    lips/PRelu_12                 1 1 lips/Conv__1347:0 lips/p_re_lu_31/Alpha_dequantize_prelu/add:0 0=32
+Split                    lips/splitncnn_11             1 2 lips/p_re_lu_31/Alpha_dequantize_prelu/add:0 lips/p_re_lu_31/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/p_re_lu_31/Alpha_dequantize_prelu/add:0_splitncnn_1
+ConvolutionDepthWise     lips/depthwise_61             1 1 lips/p_re_lu_31/Alpha_dequantize_prelu/add:0_splitncnn_1 lips/depthwise_61:0 0=32 1=3 11=3 2=1 12=1 3=1 13=1 4=1 14=1 15=1 16=1 5=0 6=288 7=32
+Convolution              lips/Conv__1350               1 1 lips/depthwise_61:0 lips/Conv__1350:0 0=32 1=1 11=1 2=1 12=1 3=1 13=1 5=1 6=1024
+BinaryOp                 lips/add_29__xeno_compat__1   2 1 lips/p_re_lu_31/Alpha_dequantize_prelu/add:0_splitncnn_0 lips/Conv__1350:0 lips/add_29__xeno_compat__1:0 0=0
+PReLU                    lips/PRelu_13                 1 1 lips/add_29__xeno_compat__1:0 lips/p_re_lu_32/Alpha_dequantize_prelu/add:0 0=32
+Convolution              lips/Conv__1357               1 1 lips/p_re_lu_32/Alpha_dequantize_prelu/add:0 lips/Conv__1357:0 0=160 1=2 11=2 2=1 12=1 3=2 13=2 5=1 6=20480
+Reshape                  lips/reshape_1_1              1 1 lips/Conv__1357:0 lips/output 0=2 1=80

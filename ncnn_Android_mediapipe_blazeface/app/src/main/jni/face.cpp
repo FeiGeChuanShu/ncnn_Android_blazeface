@@ -947,7 +947,7 @@ int Face::load(AAssetManager* mgr, const char* modeltype, int _target_size, bool
     blazepalm_net.load_param(mgr, parampath);
     blazepalm_net.load_model(mgr, modelpath);
 
-    landmark.load(mgr,"face_mesh_new");
+    landmark.load(mgr,"face_landmark_with_attention");
 
     target_size = _target_size;
 

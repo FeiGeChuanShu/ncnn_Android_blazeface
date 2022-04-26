@@ -227,8 +227,15 @@ static void refine_part(const ncnn::Net& net, TransformParam& transform_param, c
     ncnn::Extractor ex = net.create_extractor();
     ex.input(transform_param.input.c_str(), output_trans_bilinear);
 
-    ex.extract(transform_param.output_eye.c_str(), refine_eye);
-    ex.extract(transform_param.output_iris.c_str(), refine_iris);
+    if (transform_param.outputs.size()==1)
+    {
+        ex.extract(transform_param.outputs[0].c_str(), refine_eye);
+    }
+    else
+    {
+        ex.extract(transform_param.outputs[0].c_str(), refine_eye);
+        ex.extract(transform_param.outputs[1].c_str(), refine_iris);
+    }
 
     float q_11 = transform_param.output_trans_matrix[0] * trans_matrix_scale[0];
     float q_12 = transform_param.output_trans_matrix[1] * trans_matrix_scale[1];
@@ -248,16 +255,20 @@ static void refine_part(const ncnn::Net& net, TransformParam& transform_param, c
             ptr[j * w + 1] = b;
         }
     }
-    w = refine_iris.w;
-    for (int i = 0; i < refine_iris.c; i++)
+
+    if (!refine_iris.empty())
     {
-        float* ptr = refine_iris.channel(i);
-        for (int j = 0; j < refine_iris.h; j++)
+        w = refine_iris.w;
+        for (int i = 0; i < refine_iris.c; i++)
         {
-            float a = ptr[j * w + 0] * q_11 + ptr[j * w + 1] * q_12 + q_13;
-            float b = ptr[j * w + 0] * q_21 + ptr[j * w + 1] * q_22 + q_23;
-            ptr[j * w + 0] = a;
-            ptr[j * w + 1] = b;
+            float* ptr = refine_iris.channel(i);
+            for (int j = 0; j < refine_iris.h; j++)
+            {
+                float a = ptr[j * w + 0] * q_11 + ptr[j * w + 1] * q_12 + q_13;
+                float b = ptr[j * w + 0] * q_21 + ptr[j * w + 1] * q_22 + q_23;
+                ptr[j * w + 0] = a;
+                ptr[j * w + 1] = b;
+            }
         }
     }
 
@@ -287,7 +298,6 @@ int LandmarkDetect::load(AAssetManager* mgr, const char* modeltype, bool use_gpu
     landmark.load_param(mgr, parampath);
     landmark.load_model(mgr, modelpath);
 
-
     left_transform_param.left_roration_idx = 33;
     left_transform_param.output_height = 16;
     left_transform_param.output_width = 16;
@@ -296,9 +306,8 @@ int LandmarkDetect::load(AAssetManager* mgr, const char* modeltype, bool use_gpu
     left_transform_param.scale_y = 1.5;
     left_transform_param.output_trans_matrix.reserve(16);
     left_transform_param.input = "left/input";
-    left_transform_param.output_eye = "left/eye";
-    left_transform_param.output_iris = "left/iris";
-
+    left_transform_param.outputs.emplace_back("left/eye");
+    left_transform_param.outputs.emplace_back("left/iris");
 
     right_transform_param.left_roration_idx = 362;
     right_transform_param.output_height = 16;
@@ -308,8 +317,18 @@ int LandmarkDetect::load(AAssetManager* mgr, const char* modeltype, bool use_gpu
     right_transform_param.scale_y = 1.5;
     right_transform_param.output_trans_matrix.reserve(16);
     right_transform_param.input = "right/input";
-    right_transform_param.output_eye = "right/eye";
-    right_transform_param.output_iris = "right/iris";
+    right_transform_param.outputs.emplace_back("right/eye");
+    right_transform_param.outputs.emplace_back("right/iris");
+
+    lip_transform_param.left_roration_idx = 61;
+    lip_transform_param.output_height = 16;
+    lip_transform_param.output_width = 16;
+    lip_transform_param.right_rotation_idx = 291;
+    lip_transform_param.scale_x = 1.5;
+    lip_transform_param.scale_y = 1.5;
+    lip_transform_param.output_trans_matrix.reserve(16);
+    lip_transform_param.input = "lips/input";
+    lip_transform_param.outputs.emplace_back("lips/output");
     return 0;
 }
 
@@ -317,30 +336,7 @@ int LandmarkDetect::detect(const cv::Mat& rgb,const cv::Mat& trans_mat, std::vec
         std::vector<cv::Point2f>& left_eyes,std::vector<cv::Point2f>& right_eyes)
 {
     cv::Mat input = rgb.clone();
-    /*
-    ncnn::Mat in = ncnn::Mat::from_pixels(input.data, ncnn::Mat::PIXEL_RGB, input.cols, input.rows);
-    const float norm_vals[3] = { 1 / 255.f, 1 / 255.f, 1 / 255.f };
-    in.substract_mean_normalize(0, norm_vals);
-    ncnn::Mat points,score;
-    {
-        ncnn::Extractor ex = landmark.create_extractor();
-        ex.input("input", in);
-        ex.extract("output", points);
-    }
 
-    float* points_data = (float*)points.data;
-    for (int i = 0; i < 468; i++)
-    {
-        cv::Point2f pt;
-        float x = points_data[i * 3];
-        float y = points_data[i * 3 + 1];
-
-        pt.x = x * trans_mat.at<double>(0, 0) + y * trans_mat.at<double>(0, 1) + trans_mat.at<double>(0, 2);
-        pt.y = x * trans_mat.at<double>(1, 0) + y * trans_mat.at<double>(1, 1) + trans_mat.at<double>(1, 2);
-
-        landmarks.push_back(pt);
-    }
-    */
     const float mean_vals[3] = { 127.5f, 127.5f,  127.5f };
     const float norm_vals[3] = { 1/127.5f, 1 / 127.5f, 1 / 127.5f };
     ncnn::Mat in = ncnn::Mat::from_pixels(input.data, ncnn::Mat::PIXEL_RGB, input.cols, input.rows);
@@ -372,6 +368,9 @@ int LandmarkDetect::detect(const cv::Mat& rgb,const cv::Mat& trans_mat, std::vec
     ncnn::Mat right_eye, right_iris;
     refine_part(landmark, right_transform_param, face_mesh,right_eye_idxs, features, trans_matrix_scale, right_eye, right_iris);
 
+    ncnn::Mat lips,tmp;
+    refine_part(landmark, lip_transform_param, face_mesh, lips_idxs, features, trans_matrix_scale, lips, tmp);
+
     for(int i = 0;  i < 71; i++)
     {
         cv::Point2f left_pt;
@@ -387,6 +386,15 @@ int LandmarkDetect::detect(const cv::Mat& rgb,const cv::Mat& trans_mat, std::vec
         right_pt.x = x * trans_mat.at<double>(0, 0) + y * trans_mat.at<double>(0, 1) + trans_mat.at<double>(0, 2);
         right_pt.y = x * trans_mat.at<double>(1, 0) + y * trans_mat.at<double>(1, 1) + trans_mat.at<double>(1, 2);
         right_eyes.push_back(right_pt);
+    }
+    for (int i = 0; i < lips_idxs.size(); i++)
+    {
+        cv::Point2f lip_pt;
+        float x = lips[i * 2];
+        float y = lips[i * 2 + 1];
+        lip_pt.x = x * trans_mat.at<double>(0, 0) + y * trans_mat.at<double>(0, 1) + trans_mat.at<double>(0, 2);
+        lip_pt.y = x * trans_mat.at<double>(1, 0) + y * trans_mat.at<double>(1, 1) + trans_mat.at<double>(1, 2);
+        landmarks[lips_idxs[i]] = lip_pt;
     }
     return 0;
 }
